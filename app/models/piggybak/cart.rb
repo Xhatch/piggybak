@@ -6,7 +6,7 @@ module Piggybak
     attr_accessor :extra_data
     alias :subtotal :total
     alias :items :sellables
-  
+
     def initialize(cookie='')
       self.sellables = []
       self.errors = []
@@ -21,7 +21,7 @@ module Piggybak
 
       self.extra_data = {}
     end
-  
+
     def self.to_hash(cookie)
       cookie ||= ''
       cookie.split(';').inject({}) do |hash, item|
@@ -29,7 +29,7 @@ module Piggybak
         hash
       end
     end
-  
+
     def self.to_string(cart)
       cookie = ''
       cart.each do |k, v|
@@ -44,19 +44,19 @@ module Piggybak
       cart["#{params[:sellable_id]}"] += params[:quantity].to_i
       to_string(cart)
     end
-  
+
     def self.remove(cookie, sellable_id)
       cart = to_hash(cookie)
       cart[sellable_id] = 0
       to_string(cart)
     end
-  
+
     def self.update(cookie, params)
       cart = to_hash(cookie)
       cart.each { |k, v| cart[k] = params[:quantity][k].to_i }
       to_string(cart)
     end
- 
+
     def to_cookie
       cookie = ''
       self.sellables.each do |item|
@@ -64,7 +64,7 @@ module Piggybak
       end
       cookie
     end
-  
+
     def update_quantities
       self.errors = []
       new_sellables = []
@@ -89,6 +89,11 @@ module Piggybak
       form_params.each do |k, v|
         self.extra_data[k.to_sym] = v if ![:controller, :action].include?(k)
       end
+    end
+
+    def empty?
+      nitems = self.sellables.inject(0) { |nitems, item| nitems + item[:quantity] }
+      nitems == 0
     end
   end
 end
