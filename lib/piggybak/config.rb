@@ -67,7 +67,7 @@ module Piggybak
 
         @activemerchant_mode = :test
 
-        @logging = false
+        @logging = true
         @logging_file = "/log/orders.log"
 
         @whois_url = nil
