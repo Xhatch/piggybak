@@ -94,7 +94,7 @@ module Piggybak
     def email
       order = Order.find(params[:id])
 
-      if can?(:email, order)
+      if can?(:email, order) && false
         Piggybak::Notifier.order_notification(order).deliver
         flash[:notice] = "Email notification sent."
         OrderNote.create(:order_id => order.id, :note => "Email confirmation manually sent.", :user_id => current_user.id)

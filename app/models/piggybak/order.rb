@@ -30,7 +30,7 @@ module Piggybak
                     :order_notes_attributes, :details, :recorded_changer, :ip_address
                    
     def deliver_order_confirmation
-      Piggybak::Notifier.order_notification(self).deliver
+      # Piggybak::Notifier.order_notification(self).deliver
     end
  
     def initialize_defaults
